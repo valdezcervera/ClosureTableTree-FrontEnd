@@ -1,16 +1,25 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { TreeControllerComponentComponent } from './components/tree-controller-component/tree-controller-component.component';
+import { TreeAddNodeComponent } from './components/tree-add-node/tree-add-node.component';
+import { TreeRemoveNodeComponent } from './components/tree-remove-node/tree-remove-node.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TreeControllerComponentComponent,
+    TreeAddNodeComponent,
+    TreeRemoveNodeComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

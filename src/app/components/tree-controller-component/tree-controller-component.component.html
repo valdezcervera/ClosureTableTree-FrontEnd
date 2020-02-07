@@ -1,19 +1,29 @@
 <div class="data-container">
   <div>
     <app-tree-add-node 
-      (nodeAdd)="getNotification()"
+      [tree]="tree"
+      [listItems]="listItems"
+      [parentsID]="parentsID"
+      (nodeAdd)="getNotification($event)"
     > </app-tree-add-node>
   </div>
-  <div class="list">
+  <div class="list-container list">
     <h1>LIST</h1>
+    <ul class="list-group --margin" *ngFor="let item of listItems">
+      <li class="list-group-item --width">
+        {{item.name}}<br>
+        Id: {{item.id}}
+      </li>
+    </ul>
   </div>
   <div class="tree">  
-    <h1 class="container">Angular 2 Recursive List</h1>
+    <h1 class="container">Tree Items</h1>
     <ul class="list-group">
       <ng-template #recursiveList let-tree>
         <li class="list-group-item" *ngFor="let item of tree">
-          NAME: {{item.name}} <br>
-          ID: {{item.id}}
+          NAME: {{item.name}}<br>
+          ID: {{item.id}}<br>
+              <button class="btn btn-danger" (click)="removeTreeItem(item)">remove item</button>
           <ul *ngIf="item.children.length > 0">
             <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: item.children }"></ng-container>
           </ul>

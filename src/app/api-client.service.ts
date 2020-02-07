@@ -15,21 +15,61 @@ const httpOptions = {
 })
 export class ApiClientService {
   
-  private BASE_URL = 'http://localhost:3000/categories';
-
   constructor(public http: HttpClient) { }
+  private BASE_URL = 'http://localhost:3000';
+
+  // Tree
+  private DELETE_PATH = 'node/delete/node'
 
   getTree(): Observable<TNodeParent[]> {
-    return this.http.get(this.BASE_URL )
-    .pipe(map((res: any) =>  res))
+    return this.http.get(`${this.BASE_URL}/categories` )
+    .pipe(
+      map((res: any) =>  res),
+      catchError(this.handleError)
+    )
   }
   addNode(node: TNodeChild): Observable<any> {
-    return this.http.post(this.BASE_URL, node, httpOptions)
+    return this.http.post(`${this.BASE_URL}/categories`, node, httpOptions)
     .pipe(
       catchError(this.handleError)
       );
   }
+  removeNode(node: TNodeChild): Observable<any> {
+    return this.http.delete(`${this.BASE_URL}/${this.DELETE_PATH}/${node}`, httpOptions)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
 
+  // List
+  getList(): Observable<[]> {
+    return this.http.get(`${this.BASE_URL}/itemlist`)
+    .pipe(
+      map((res: any) => res),
+      catchError(this.handleError)
+      );
+  }
+  addListItem(item): Observable<any> {
+    return this.http.post(`${this.BASE_URL}/itemlist`, item, httpOptions)
+    .pipe(
+      catchError(this.handleError)
+      );
+  }
+  getListItem(id): Observable<any> {
+    return this.http.get(`${this.BASE_URL}/itemlist/${id}`, httpOptions)
+    .pipe(
+      map((res: any) => res),
+      catchError(this.handleError)
+    );
+  }
+  removeListItem(id): Observable<any> {
+    return this.http.delete(`${this.BASE_URL}/itemlist/${id}`, httpOptions)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  // Error handleling
   handleError(error) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {

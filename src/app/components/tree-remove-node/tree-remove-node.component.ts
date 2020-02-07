@@ -9,10 +9,11 @@ import { Item } from '../Models/Item';
   styleUrls: ['./tree-remove-node.component.scss']
 })
 export class TreeRemoveNodeComponent implements OnInit {
-  @Output() nodeRemove: EventEmitter<any> = new EventEmitter()
-  nodeID = ['1'] //TODO: insert ID's from tree recursively
 
-  constructor() { }
+  constructor(private apiClinet: ApiClientService) { }
+
+  @Output() nodeRemove: EventEmitter<any> = new EventEmitter()
+  nodeID = new Item('', { id: null })
 
   ngOnInit() {
   }
@@ -22,5 +23,5 @@ export class TreeRemoveNodeComponent implements OnInit {
     //   this.nodeRemove.emit()
     // })
     alert('item removed')
-}
+  }
 }

@@ -1,1 +1,23 @@
-<p>tree-remove-node works!</p>
+<div class="container form-element">
+        <h3>Remove Node from Tree</h3>
+        <form #ItemForm="ngForm" (ngSubmit)="onSubmit(); ItemForm.reset()">
+            <div class="form-group">
+                <label for="item">Item ID</label>
+                <input type="text" class="form-control item-name" id="item" 
+                required
+                [(ngModel)]="nodeID.id" name="nodeID"
+                #nodeID="ngModel"
+                >
+                <div [hidden]="nodeID.valid || nodeID.pristine"
+                class="alert alert-danger">
+                   Item's ID is required
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success"
+            [disabled]="!ItemForm.form.valid"
+            >
+                Submit
+            </button>
+        </form>
+    </div>
+    

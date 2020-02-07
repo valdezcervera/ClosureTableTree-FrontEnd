@@ -9,33 +9,62 @@ import { TNodeParent } from 'src/app/data-types/node';
 })
 export class TreeControllerComponentComponent implements OnInit {
 
-  public tree: TNodeParent[];
-
-  getNotification() {
-    this.getAllNodes()
-  }
-
-// treeTraverse(tree) {
-//   let res=[]
-//   tree.forEach(node => {
-//     if (node.children.length === 0) return res.push(node)
-//     res.push({name: node.name, id: node.id})
-//     console.log('node', node)      
-//       this.treeTraverse(node.children)
-//     });
-//   return res
-// }
-
   constructor(private apiClinet: ApiClientService) { }
 
-  getAllNodes () {
-  this.apiClinet.getTree().subscribe((data: TNodeParent[]) => {
-    this.tree = data.map((node: TNodeParent) => node)
-  })
-  }
+  tree: TNodeParent[];
+  listItems: Array<Object>
+  parentsID = ['1'] //Set root node id.
 
-  ngOnInit() { 
+  ngOnInit() {
     this.getAllNodes()
+    this.getListItems()
   }
 
+  getNotification($event) {
+    this.getAllNodes()
+    this.removeListItem($event.name)
+    console.log($event)
+  }
+
+  //Tree
+  getAllNodes() {
+    this.apiClinet.getTree().subscribe((data: TNodeParent[]) => {
+      this.tree = data.map((node: TNodeParent) => node)
+    })
+  }
+
+  removeTreeItem(item) {
+    this.addListItem(item)
+    this.removeParentIdFromList(item.id)
+    this.apiClinet.removeNode(item.id).subscribe((data: any) => {
+      this.getAllNodes()
+      console.log(data)
+    })
+  }
+  // handle ParentID list
+  removeParentIdFromList(id) {
+    let i:any  
+  for(i in this.parentsID){
+    if(this.parentsID[i]==id){
+      this.parentsID.splice(i,1);
+        break;
+      }
+    }
+  }
+  //List
+  getListItems() {
+    this.apiClinet.getList().subscribe((data: Array<Object>) => {
+      this.listItems = data.map( (item: Object) => item)
+    })
+  }
+  removeListItem(id) {
+    this.apiClinet.removeListItem(id).subscribe(() => {
+      this.getListItems()
+    })
+  }
+  addListItem(item) {
+    this.apiClinet.addListItem({name: item.name}).subscribe(() => {
+      this.getListItems()
+    })
+  }
 }

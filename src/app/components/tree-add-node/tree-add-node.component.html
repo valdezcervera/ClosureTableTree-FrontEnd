@@ -1,7 +1,7 @@
 <div class="container form-element">
-    <h1>Add Node to Tree</h1>
+    <h3>Add Node to Tree</h3>
     <form #ItemForm="ngForm" (ngSubmit)="onSubmit(); ItemForm.reset()">
-        <div class="form-group">
+        <!-- <div class="form-group">
             <label for="item">Item Name</label>
             <input type="text" class="form-control item-name" id="item" 
             required
@@ -12,8 +12,24 @@
             class="alert alert-danger">
                Name is required
             </div>
-        </div>
+        </div> -->
 
+        <div class="form-group">
+            <label for="list">select list Item</label>
+            <select class="form-control" id="list" required
+                [(ngModel)]="nodeModel.name" name="list"
+                #list="ngModel"
+            >
+                <option *ngFor="let item of listItems" [value]="item.id">{{item.name}}</option>
+            </select>
+            <div 
+                [hidden]="list.dirty"
+                class="alert alert-danger"
+                >
+                  Please select a parent id from the list
+            </div>{{nodeModel | json}}
+        </div>
+<!-- //============================================================= -->
         <div class="form-group">
             <label for="parentId">Parent ID</label>
             <input type="text" class="form-control" id="parentId" disabled
@@ -22,19 +38,20 @@
         </div>
 
         <div class="form-group">
-                <label for="list">select parent id</label>
-                <select class="form-control" id="list" required
+            <label for="list">select parent id</label>
+            <select class="form-control" id="list" required
                 [(ngModel)]="nodeModel.parent.id" name="list"
                 #list="ngModel"
+            >
+                <option *ngFor="let item of parentsID" [value]="item">{{item}}</option>
+            </select>
+            <div 
+                [hidden]="list.dirty"
+                class="alert alert-danger"
                 >
-                  <option *ngFor="let item of parentsID" [value]="item">{{item}}</option>
-                </select>
-                <div [hidden]="list.dirty"
-                  class="alert alert-danger"
-                  >
-                    Please select a parent id from the list
-                  </div>
-              </div>
+                  Please select a parent id from the list
+            </div>
+        </div>
         <button type="submit" class="btn btn-success"
         [disabled]="!ItemForm.form.valid"
         >
@@ -42,5 +59,3 @@
         </button>
     </form>
 </div>
-
-<!-- (click)="ItemForm.reset()" -->

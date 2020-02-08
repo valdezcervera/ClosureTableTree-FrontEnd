@@ -4,6 +4,7 @@ export class TNodeParent {
     "children": TNodeParent[];
 }
 export class TNodeChild {
+    "id": number
     "name": string;
     "parent": {
         "id": number

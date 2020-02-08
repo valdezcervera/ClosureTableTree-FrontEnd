@@ -13,17 +13,35 @@ export class TreeControllerComponentComponent implements OnInit {
 
   tree: TNodeParent[];
   listItems: Array<Object>
-  parentsID = ['1'] //Set root node id.
+  parentsID = [] 
+
+  treeTraverse(tree) {
+    let res=[]
+    tree
+    ?
+    tree.forEach(node => {
+      if (node.children.length === 0) return this.parentsID.push(node.id)
+      this.parentsID.push(node.id)     
+        this.treeTraverse(node.children)
+    })
+    :
+    res.push('no values found')
+    return res
+  }
 
   ngOnInit() {
-    this.getAllNodes()
+    // this.getAllNodes()
+    this.apiClinet.getTree().subscribe((data: TNodeParent[]) => {
+      this.tree = data.map((node: TNodeParent) => node)
+      this.treeTraverse(this.tree)
+      console.log(this.parentsID)
+    })
     this.getListItems()
   }
 
   getNotification($event) {
     this.getAllNodes()
-    this.removeListItem($event.name)
-    console.log($event)
+    this.removeListItem($event)
   }
 
   //Tree
@@ -34,15 +52,17 @@ export class TreeControllerComponentComponent implements OnInit {
   }
 
   removeTreeItem(item) {
-    this.addListItem(item)
-    this.removeParentIdFromList(item.id)
     this.apiClinet.removeNode(item.id).subscribe((data: any) => {
-      this.getAllNodes()
       console.log(data)
+      data.map((el) => {
+        this.addListItem(el) 
+        this.spliceIdFromList(el.id)
+      })
+      this.getAllNodes()
     })
   }
-  // handle ParentID list
-  removeParentIdFromList(id) {
+  // handle ParentID's list
+  spliceIdFromList(id) {
     let i:any  
   for(i in this.parentsID){
     if(this.parentsID[i]==id){

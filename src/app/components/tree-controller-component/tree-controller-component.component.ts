@@ -36,7 +36,6 @@ export class TreeControllerComponentComponent implements OnInit {
       this.treeTraverse(this.tree);
     });
     this.getListItems();
-    console.log('no console please');
   }
 
   getNotification($event) {
@@ -71,19 +70,25 @@ export class TreeControllerComponentComponent implements OnInit {
       }
   }
   // List
+  sortList() {
+    this.listItems.sort((a, b) => a.name.localeCompare(b.name, undefined, {numeric: true}));
+  }
   getListItems() {
     this.apiClinet.getList().subscribe((data: Array<TNodeChild>) => {
       this.listItems = data.map( (item: TNodeChild) => item);
+      this.sortList();
     });
   }
   removeListItem(id) {
     this.apiClinet.removeListItem(id).subscribe(() => {
       this.getListItems();
+      this.sortList();
     });
   }
   addListItem(item) {
     this.apiClinet.addListItem({name: item.name}).subscribe(() => {
       this.getListItems();
+      this.sortList();
     });
   }
 }

@@ -34,7 +34,6 @@ export class TreeControllerComponentComponent implements OnInit {
     this.apiClinet.getTree().subscribe((data: TNodeParent[]) => {
       this.tree = data.map((node: TNodeParent) => node)
       this.treeTraverse(this.tree)
-      console.log(this.parentsID)
     })
     this.getListItems()
   }

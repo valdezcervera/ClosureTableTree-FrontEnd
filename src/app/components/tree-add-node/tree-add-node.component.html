@@ -2,42 +2,34 @@
     <h3>Add Node to Tree</h3>
     <form #ItemForm="ngForm" (ngSubmit)="onSubmit(); ItemForm.reset()">
         <div class="form-group">
-            <label for="list">select list Item</label>
-            <select class="form-control" id="list" required
-                [(ngModel)]="nodeModel.id" name="list"
-                #list="ngModel"
+            <label for="item-list">select list Item</label>
+            <select class="form-control" id="item-list" required
+                [(ngModel)]="nodeModel.id" name="item-list"
+                #itemList="ngModel"
             >
                 <option *ngFor="let item of listItems" [value]="item.id">{{item.name}}</option>
             </select>
             <div 
-                [hidden]="list.dirty"
+                [hidden]="itemList.dirty"
                 class="alert alert-danger"
                 >
-                  Please select a parent id from the list<br>
+                  Please select an Item
             </div>
         </div>
 <!-- //============================================================= -->
-        <div class="form-group">     
-            <label for="parentId">Parent ID</label>
-            <input type="text" class="form-control" id="parentId" 
-            disabled
-            [(ngModel)]="nodeModel.parent.id" name="id"
-            >
-        </div>
-
         <div class="form-group">
-            <label for="list">select parent id</label>
-            <select class="form-control" id="list" required
-                [(ngModel)]="nodeModel.parent.id" name="list"
-                #list="ngModel"
+            <label for="parent-list">select parent id</label>
+            <select class="form-control" id="parent-list" required
+                [(ngModel)]="nodeModel.parent.id" name="parent-list"
+                #parentList="ngModel"
             >
                 <option *ngFor="let item of parentsID" [value]="item">{{item}}</option>
             </select>
             <div 
-                [hidden]="list.dirty"
+                [hidden]="parentList.dirty"
                 class="alert alert-danger"
                 >
-                  Please select a parent id from the list
+                  Please select a parent id
             </div>
         </div>
         <button type="submit" class="btn btn-success"

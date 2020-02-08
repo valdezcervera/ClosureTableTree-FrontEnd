@@ -46,12 +46,9 @@
     "no-consecutive-blank-lines": false,
     "no-console": [
       true,
-      "debug",
-      "info",
-      "time",
-      "timeEnd",
-      "trace"
-    ],
+      "error",
+      "always"
+  ],
     "no-empty": false,
     "no-inferrable-types": [
       true,

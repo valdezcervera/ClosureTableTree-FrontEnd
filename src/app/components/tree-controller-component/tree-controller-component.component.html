@@ -8,7 +8,7 @@
     > </app-tree-add-node>
   </div>
   <div class="list-container list">
-    <h1>LIST</h1>
+    <h1 class="title">LIST</h1>
     <ul class="list-group --margin" *ngFor="let item of listItems">
       <li class="list-group-item --width">
         {{item.name}}<br>
@@ -17,7 +17,7 @@
     </ul>
   </div>
   <div class="tree">  
-    <h1 class="container">Tree Items</h1>
+    <h1 class="title">Tree Items</h1>
     <ul class="list-group">
       <ng-template #recursiveList let-tree>
         <li class="list-group-item" *ngFor="let item of tree">

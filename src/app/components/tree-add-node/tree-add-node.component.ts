@@ -27,15 +27,16 @@ export class TreeAddNodeComponent implements OnInit {
   onSubmit = () => {
       // save model id from this context
     const modelId: any = this.nodeModel.id;
-      // get the list item which corresponds to our nodeModel. Note: nodeModel.id was converted
-      // to a string by ngModel.
+      // get the list item which corresponds to our nodeModel. Note:
+      // nodeModel.id was converted to string by ngModel.
     const filteredListItem = this.listItems.filter((el) => el.id === parseInt(modelId, 10));
-      // assing the proper name to our model for this context.
+      // assing the proper name to our model before sending.
     this.nodeModel.name = filteredListItem[0].name;
       // add the new node to the tree
     this.apiClinet.addNode(this.nodeModel).subscribe((data: any) => {
       this.parentsID.push(data.id.toString());
-        // with the modelId from our working context, remove it from the db-listItems
+        // with the modelId from our working context, remove the corresponding
+        // item from the db-listItems
       this.nodeAdd.emit(modelId);
     });
   }
